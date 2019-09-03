@@ -1,15 +1,35 @@
 from random import randint
 
 
-def pri_winner(name):
+def pri_winner(name1, name2, win):
     print('$$$' * 10)
-    print(f'{name} wins')
+    if win == "p":
+        print(f'{name2} killed {name1}')
+        print("Another Monster Arrives")
+    if win == "m":
+        print(f'{name1} finally defeated {name2}')
     print('$$$' * 10)
+
+
+def generate_monster():
+    f = open("Monsters Data.txt", "r")
+    monster_id = randint(0, 9)
+
+    for line in f:
+        if line[0] == str(monster_id):
+            data = line.split()
+            new_monster = {"Name": data[1],
+                           "Health": int(data[2]),
+                           "Attack": int(data[3]),
+                           "Attack spread": int(data[4])}
+
+    f.close()
+    return new_monster
 
 
 def main_game():
     player = {"Name": "asd", "Health": 100, "Heal": 16, "Attack": 10}
-    monster = {"Name": "Jack", "Health": 100, "Attack": 10}
+    monster = generate_monster()
 
     print("Enter Player Name")
     player["Name"] = input(">")
@@ -31,11 +51,12 @@ def main_game():
         if player_move == "1":
             monster["Health"] -= player["Attack"]
             if monster["Health"] > 0:
-                player["Health"] -= (monster["Attack"] + randint(0, 9))
+                player["Health"] -= (monster["Attack"] + randint(0, monster["Attack spread"]))
             else:
                 monster_status = "dead"
         elif player_move == "2":
-            player["Health"] = player["Health"] + player["Heal"] - (monster["Attack"] + randint(0, 9))
+            monster_attack = (monster["Attack"] + randint(0, monster["Attack spread"]))
+            player["Health"] = player["Health"] + player["Heal"] - monster_attack
         elif player_move == "3":
             game_in_progress = False
         else:
@@ -46,11 +67,12 @@ def main_game():
 
         if monster_status == "dead":
             game_in_progress = False
+            pri_winner(monster["Name"], player["Name"], "p")
             # generate new monster
 
         if player_status == "dead":
             game_in_progress = False
-            pri_winner("Monsters")
+            pri_winner("Monsters", player["Name"], "m")
             # check Leader Boards
             # end game
 
