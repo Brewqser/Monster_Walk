@@ -1,9 +1,9 @@
-0 Plebe 100 9 0
-1 Mathias 80 2 10
-2 Anabella 74 5 5
+0 Plebe 100 9 1
+1 Mathias 80 2 20
+2 Anabella 74 5 8
 3 Krishna 20 4 10
 4 Kaela 55 10 20
-5 Rabbi 83 1 5
+5 Rabbi 83 1 15
 6 Males 25 20 4
 7 Masha 110 10 5
 8 Nina 20 0 100

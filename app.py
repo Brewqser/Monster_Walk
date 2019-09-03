@@ -27,6 +27,41 @@ def generate_monster():
     return new_monster
 
 
+def show_leaderboard():
+    f = open("Leader Board.txt", "r")
+    file = f.read()
+    f.close()
+
+    print("&" * 30)
+    print(file)
+    print("&" * 30)
+
+
+def sort_second(val):
+    return -1 * val[1]
+
+
+def update_leaderboard(name, monster_killed):
+    f = open("Leader Board.txt", "r")
+    data = []
+    for line in f:
+        d = line.split(' ')
+        data.append((d[2], int(d[5].rstrip())))
+    f.close()
+
+    data.append((name, monster_killed))
+    data.sort(key=sort_second)
+
+    f = open("Leader Board.txt", "w")
+    it = min(len(data), 10)
+    for i in range(0, it):
+        if i != it - 1:
+            f.write(f'{i+1}. Name: {data[i][0]} Monster killed: {data[i][1]}\n')
+        else:
+            f.write(f'{i+1}. Name: {data[i][0]} Monster killed: {data[i][1]}')
+    f.close()
+
+
 def main_game():
     player = {"Name": "asd", "Health": 100, "Heal": 16, "Attack": 10}
     monster = generate_monster()
@@ -36,6 +71,7 @@ def main_game():
 
     player_status = "lives"
     monster_status = "lives"
+    monster_killed = 0
 
     game_in_progress = True
     while game_in_progress:
@@ -66,15 +102,16 @@ def main_game():
             player_status = "dead"
 
         if monster_status == "dead":
-            game_in_progress = False
+            monster_killed += 1
             pri_winner(monster["Name"], player["Name"], "p")
-            # generate new monster
+            monster = generate_monster()
+            print(f'{monster["Name"]} came to fight you.')
+            monster_status = "lives"
 
         if player_status == "dead":
             game_in_progress = False
             pri_winner("Monsters", player["Name"], "m")
-            # check Leader Boards
-            # end game
+            update_leaderboard(player["Name"], monster_killed)
 
 
 game = True
@@ -82,20 +119,15 @@ game = True
 while game:
     print("---" * 10)
     print("1) Start Game")
-    print("2) Leader Boards")
+    print("2) Leader Board")
     print("3) Exit Game")
     main_game_input = input(">")
 
     if main_game_input == "1":
         main_game()
-
     elif main_game_input == "2":
-        # show Leader Boards
-        print("written soon")
-
+        show_leaderboard()
     elif main_game_input == "3":
         game = False
-
     else:
         print("Invalid Choice")
-

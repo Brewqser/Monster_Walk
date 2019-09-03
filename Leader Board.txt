@@ -1,0 +1,9 @@
+1. Name: brewq Monster killed: 23
+2. Name: me Monster killed: 21
+3. Name: Mikel Monster killed: 20
+4. Name: Michal Monster killed: 17
+5. Name: Maced Monster killed: 10
+6. Name: Andrei Monster killed: 2
+7. Name: Adam Monster killed: 1
+8. Name: Buka Monster killed: 1
+9. Name: Test Monster killed: 1
